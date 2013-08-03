@@ -7,3 +7,12 @@ module.exports = class HeaderView extends View
   region: 'footer'
   id: 'footer'
   template: template
+
+
+  events:
+    "click a": "manageFooterClick"
+
+
+  manageFooterClick:(e)=>
+    console.log "click on footer"
+    window.linkManager.manageFooterClick(e);
