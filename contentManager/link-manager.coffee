@@ -26,10 +26,8 @@ module.exports = class LinkManager
 
   changeLanguage: (id) =>
     window.contentManager.setCurrentDictionary(id)
-    @.refresh()
 
-  refresh: () =>
-    location.reload();
+
 
   manageFooterClick:(e)=>
     e.preventDefault()

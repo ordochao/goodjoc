@@ -12,5 +12,8 @@ module.exports = class HeaderView extends View
     "click a": "manageHeaderClick"
 
 
+  Handlebars.registerHelper("languageLinks",window.contentManager.getLanguageLinks )
+
+
   manageHeaderClick:(e)=>
     window.linkManager.manageHeaderClick(e);

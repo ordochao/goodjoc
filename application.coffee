@@ -39,6 +39,7 @@ module.exports = class Application extends Chaplin.Application
     # Freeze the application instance to prevent further changes.
     Object.freeze? this
 
+
   # Create additional mediator properties.
   initMediator: ->
     # Add additional application-specific properties and methods
