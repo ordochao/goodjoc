@@ -12,7 +12,26 @@ module.exports = class HeaderView extends View
     "click a": "manageHeaderClick"
 
 
-  Handlebars.registerHelper("languageLinks",window.contentManager.getLanguageLinks )
+
+  constructor: () ->
+    Handlebars.registerHelper("languageLinks",@getLanguageLinks )  
+    super
+
+  
+  getLanguageLinks: () =>
+    link  = '<a class="language-selector-link ' 
+    if window.contentManager.currentIndex == 0 
+      link += ' selected'
+    link += '" href="lang=cat">cat</a>\n'
+    link += '<a class="language-selector-link ' 
+    if window.contentManager.currentIndex == 1
+      link += ' selected'
+    link += '" href="lang=es">cast</a>\n'
+    link += '<a class="language-selector-link ' 
+    if window.contentManager.currentIndex == 2
+      link += ' selected'
+    link += '" href="lang=en">en</a>\n'
+    return link
 
 
   manageHeaderClick:(e)=>

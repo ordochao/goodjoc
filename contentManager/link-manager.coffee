@@ -2,6 +2,8 @@
 module.exports = class LinkManager
   # Set your application name here so the document title is set to
   # “Controller title – Site title” (see Chaplin.Layout#adjustTitle)
+  parameters: ""
+
   openExternalLink:(url)  =>
     console.log url
     window.open(url,'_blank')
@@ -25,7 +27,18 @@ module.exports = class LinkManager
         return
 
   changeLanguage: (id) =>
+    window.linkManager.storeCookieLanguage(id)
     window.contentManager.setCurrentDictionary(id)
+    window.contentManager.reload()
+
+
+  storeCookieLanguage: (id) =>
+    today = new Date
+    expiry = new Date(today.getTime() + 30 * 24 * 3600 * 1000) # plus 30 days
+    cookieContent = "language=" + id + "; path=/; expires=" + expiry.toGMTString();
+    console.log "storing cookie content"
+    console.log cookieContent
+    document.cookie = cookieContent
 
 
 

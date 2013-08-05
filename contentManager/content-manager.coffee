@@ -25,16 +25,21 @@ module.exports = class ContentManager
     window.application.initialize()
 
   detectDefaultLanguage: () ->
-    language = window.navigator.userLanguage || window.navigator.language;
-    if language.indexOf("en") != -1
-      contentManager.setCurrentDictionary(2)
-      return
-    if language.indexOf("cat") != -1
-      contentManager.setCurrentDictionary(0)
-      return
-    if language.indexOf("es") != -1
-      contentManager.setCurrentDictionary(1)
-      return
+    language = null
+    language = contentManager.getCookieLanguage()
+    if !language || language == undefined
+      language = window.navigator.userLanguage || window.navigator.language;
+    if !language || language == undefined
+      language = cat
+    contentManager.setCurrentDictionary(language)
+
+  getCookieLanguage: () ->
+    cookies = window.document.cookie.split(;)
+    language = "cat"
+    for cookie in cookies
+      if cookie.indexOf("language=") != -1
+        language = cookie.replace("language=","")
+    return language
 
   parseCSVToFillDictionaries: (data) ->
     for entry in data
@@ -42,27 +47,18 @@ module.exports = class ContentManager
       @castillianDictionary[entry["key"]] = entry["castellano"]
       @englishDictionary[entry["key"]] = entry["english"]
 
-  setCurrentDictionary: (id) ->
-    contentManager.currentIndex = id
-    contentManager.currentDictionary = contentManager.dictionaries[id]
-    contentManager.updateView()
-
-  updateView: () ->
-    console.log "updateView"
-    links = document.getElementsByClassName('language-selector-link')
-    for i in [0..links.length]
-      link = links[i]
-      if link
-        console.log window.contentManager.currentIndex
-        console.log i
-        console.log i == parseInt(window.contentManager.currentIndex)
-        if i == parseInt(window.contentManager.currentIndex)
-          console.log "selected is " + i
-          link.className = 'language-selector-link selected'
-        else
-          link.className = 'language-selector-link'
-
-
+  setCurrentDictionary: (language) ->
+    contentManager.currentIndex = 0
+    if (language.indexOf "en") != -1
+      contentManager.currentIndex = 2
+    if (language.indexOf "cat") != -1
+      contentManager.currentIndex = 0
+    if (language.indexOf "es")  != -1
+      contentManager.currentIndex = 1
+    contentManager.currentDictionary = contentManager.dictionaries[contentManager.currentIndex]
+  
+  reload: () ->
+    location.reload();
 
   updateHandlebars: () ->
     Handlebars.registerHelper('getContent', contentManager.getContent)
@@ -70,20 +66,3 @@ module.exports = class ContentManager
 
   getContent: (key) ->
     contentManager.currentDictionary[key]
-
-  getLanguageLinks:(e)=>
-    link  = '<a class="language-selector-link ' 
-    if window.contentManager.currentIndex == 0 
-      link += ' selected'
-    link += '" href="lang=0">cat</a>\n'
-    link += '<a class="language-selector-link ' 
-    if window.contentManager.currentIndex == 1
-      link += ' selected'
-    link += '" href="lang=1">cast</a>\n'
-    link += '<a class="language-selector-link ' 
-    if window.contentManager.currentIndex == 2
-      link += ' selected'
-    link += '" href="lang=2">en</a>\n'
-    console.log "link"
-    console.log link
-    return link
