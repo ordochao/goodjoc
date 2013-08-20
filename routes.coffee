@@ -3,3 +3,4 @@ module.exports = (match) ->
   match 'projects', 'home#projects'
   match 'about', 'home#about'
   match 'contact', 'home#contact'
+  match 'projects/selectedProject/:idProject', 'home#selectProject'

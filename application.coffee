@@ -1,5 +1,7 @@
 Chaplin = require 'chaplin'
 routes = require 'routes'
+Projects = require 'models/projects'
+Ordochao = require 'framework/ordochao'
 
 # The application object.
 module.exports = class Application extends Chaplin.Application
@@ -9,6 +11,7 @@ module.exports = class Application extends Chaplin.Application
 
   initialize: ->
     super
+    window.goodjoc.models.projects = new Projects 
 
     # Initialize core components.
     # ---------------------------

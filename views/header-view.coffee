@@ -20,19 +20,25 @@ module.exports = class HeaderView extends View
   
   getLanguageLinks: () =>
     link  = '<a class="language-selector-link ' 
-    if window.contentManager.currentIndex == 0 
+    if goodjoc.managers.contentManager.currentIndex == 0 
       link += ' selected'
     link += '" href="lang=cat">cat</a>\n'
     link += '<a class="language-selector-link ' 
-    if window.contentManager.currentIndex == 1
+    if goodjoc.managers.contentManager.currentIndex == 1
       link += ' selected'
     link += '" href="lang=es">cast</a>\n'
     link += '<a class="language-selector-link ' 
-    if window.contentManager.currentIndex == 2
+    if goodjoc.managers.contentManager.currentIndex == 2
       link += ' selected'
     link += '" href="lang=en">en</a>\n'
     return link
 
 
   manageHeaderClick:(e)=>
-    window.linkManager.manageHeaderClick(e);
+    goodjoc.managers.linkManager.manageHeaderClick(e);
+    links = document.getElementsByClassName ("header-link") 
+    for link in links
+      if link == e.target
+        link.className = "header-link selected"
+      else 
+        link.className = "header-link"

@@ -27,9 +27,9 @@ module.exports = class LinkManager
         return
 
   changeLanguage: (id) =>
-    window.linkManager.storeCookieLanguage(id)
-    window.contentManager.setCurrentDictionary(id)
-    window.contentManager.reload()
+    goodjoc.managers.linkManager.storeCookieLanguage(id)
+    goodjoc.managers.contentManager.setCurrentDictionary(id)
+    goodjoc.managers.contentManager.reload()
 
 
   storeCookieLanguage: (id) =>

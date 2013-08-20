@@ -1,8 +1,17 @@
-<div id="titleSloganBox">
-  <h1>
-    {{getContent 'page_name'}}
-  </h1>
-  <h3>
-    {{getContent 'header_1'}}
-  </h3>
+<div id="projectsCanvas">
+  {{#each items}}
+
+    <div class="projectItem displayedItem">
+      <a class="linkToProject" href="{{linkURL}}">{{linkText}}</a>
+      <a href="{{id}}">
+        <div class="contentItem">
+        <h3>{{name}}</h3>
+        <p>{{description}}</p>
+        <p>{{explanation}}</p>
+      </div>
+      <div class="backgroundItem">
+      </div>
+      </a>
+    </div>
+  {{/each}}
 </div>
